@@ -1,0 +1,182 @@
+---
+title: "Visualisasi Data dengan GGPLOT2"
+author: "Ahmad Nasuka - Institut Teknologi Statistika dan Bisnis Muhammadiyah"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    css: style.css
+    theme: cosmo
+    higlight: zenburn
+    toc: true
+    toc_float:
+      collapsed: true
+    df_print: paged
+---
+
+# Pengantar ggplot2
+ggplot2 adalah salah satu paket (package) di bahasa pemrograman R yang digunakan untuk membuat visualisasi data. Paket ini dirancang berdasarkan Grammar of Graphics, yang memungkinkan pengguna untuk membuat grafik dengan cara yang sangat fleksibel dan terstruktur. Dengan ggplot2, kamu bisa membuat berbagai jenis visualisasi seperti grafik garis, batang, sebar, dan banyak lagi, hanya dengan menyusun elemen-elemen grafis yang berbeda.
+
+# Dasar-Dasar ggplot2
+## Introduction
+## Contoh Implementasi
+### contoh pertama
+```{r}
+library(ggplot2)
+library(gapminder)
+
+data <- data.frame(x = rnorm(100), y = rnorm(100))
+ggplot(data, aes(x = x, y = y)) + 
+geom_point() + 
+labs(title = "Plot Titik", x = "Sumbu X", y = "Sumbu Y") +
+theme_dark()
+```
+
+
+### contoh kedua
+```{r}
+data <- data.frame(x = rnorm(100), y = rnorm(100), grup = sample(c("A","B","C","D"), 100, replace = TRUE))
+ggplot(data, aes(x = x, y = y, color = grup)) +
+  geom_point() +
+  facet_wrap(~ grup) +
+  scale_color_manual(values = c("A" = "blue", "B" = "red", "C" = "green", "D" = "yellow")) +
+  theme_minimal()
+```
+
+# Read Data
+### Format yang harus dilakukan
+```{r}
+# memanggil library
+library(readr)
+# membuat nama data dan memanggilnya sesuai nama file
+iris_iris <- read_csv("iris - iris.csv",, show_col_types = FALSE)
+```
+
+Fungsi dari kode yang kamu berikan adalah untuk memuat data dari file CSV ke dalam R menggunakan library readr. Mari kita bahas kode tersebut lebih rinci:
+Fungsi read_csv() dari paket readr digunakan untuk membaca file CSV (dalam hal ini "iris - iris.csv") ke dalam R dan mengubahnya menjadi data frame. Data frame ini kemudian bisa digunakan untuk analisis atau visualisasi data lebih lanjut.
+
+show_col_types = FALSE adalah argumen yang digunakan untuk menyembunyikan tampilan tipe data kolom saat file dibaca, sehingga output yang dihasilkan lebih bersih tanpa informasi tambahan tentang tipe data.
+
+Variabel iris_iris menyimpan hasil pembacaan file CSV, yang nantinya bisa digunakan untuk keperluan analisis atau manipulasi data
+
+
+### Contoh penggunaan
+```{r}
+library(readr)
+lizards <- read_csv("lizards.csv")
+View(lizards)
+```
+
+
+library(readr)Ini memuat paket readr ke dalam sesi R Anda. Paket readr adalah bagian dari tidyverse yang menyediakan fungsi untuk membaca data dengan cepat dan efisien, khususnya file CSV (Comma Separated Values) dan file teks lainnya.
+
+Fungsi read_csv() digunakan untuk membaca file CSV dengan nama "lizards.csv" dari direktori kerja Anda.
+Hasil pembacaan data akan disimpan dalam variabel lizards, yang berarti lizards akan menjadi sebuah data frame yang berisi data dari file CSV tersebut.
+
+fungsi kode ini adalah Membaca data CSV: Membaca file CSV dengan nama "lizards.csv" dan menyimpannya dalam variabel lizards.
+
+
+### Membuat visualisasi datanya
+```{r}
+ggplot(lizards, aes(x = total_length , y = weight)) + 
+geom_point() +
+labs(title = "Plot Titik", x = "total_length" , y = "weight" )
+```
+
+kode ini menggunakan ggplot2 untuk membuat scatter plot yang menunjukkan hubungan antara total_length (panjang) di sumbu x dan weight (berat) di sumbu y dari data lizards.
+
+Selain itu, kode ini juga menambahkan judul ("Plot Titik") dan label sumbu ("total_length" dan "weight") untuk mempermudah pemahaman
+
+
+```{r}
+ggplot(lizards, aes(x = total_length, y = common_name)) +
+geom_jitter() +
+  labs(title = "Plot titik - titik lizard",x = "total_length", y = "common_name")
+```
+Fungsi ggplot() digunakan untuk membuat objek plot.
+Data lizards digunakan sebagai sumber data.
+aes(x = total_length, y = common_name) mendefinisikan pemetaan variabel:
+total_length akan dipetakan ke sumbu x.
+common_name akan dipetakan ke sumbu y (yang kemungkinan berisi kategori, bukan angka).
+
+Fungsi geom_jitter() digunakan untuk menambahkan titik-titik pada plot dengan sedikit acak (jitter) di posisi sumbu x dan y untuk menghindari tumpang tindih titik yang sama.
+
+
+```{r}
+library(ggplot2)
+
+ggplot(lizards, aes(x = weight)) +
+  geom_histogram(colour = "red", fill = "blue", linetype = "dotted",linewidth = 2) +
+  labs(title = "Histogram of Lizard Weights", x = "Weight", y = "Count")
+```
+geom_histogram() membuat histogram dari data yang diberikan.
+colour = "red": Menentukan warna garis tepi (border) dari setiap batang histogram menjadi merah.
+fill = "blue": Menentukan warna isi batang histogram menjadi biru.
+linetype = "dotted": Menentukan tipe garis tepi batang histogram menjadi garis putus-putus.
+linewidth = 2: Menentukan ketebalan garis tepi batang histogram menjadi 2
+
+title = "Histogram of Lizard Weights": Menambahkan judul pada plot.
+x = "Weight": Menambahkan label pada sumbu x yang menunjukkan bahwa data yang divisualisasikan adalah berat.
+
+
+```{r}
+ggplot(lizards, aes(x = total_length , y = weight)) + 
+geom_point(colour = "green", shape = 6) +
+labs(title = "Plot Titik", x = "total_length" , y = "weight" )
+```
+Fungsi labs() menambahkan judul dan label sumbu ke plot:
+title = "Plot Titik" menambahkan judul pada plot.
+x = "total_length" menambahkan label pada sumbu x.
+y = "weight" menambahkan label pada sumbu y.
+
+
+
+```{r}
+ggplot(lizards, aes(x = total_length , y = weight)) + 
+geom_point(shape = 6, aes(colour = common_name, size = total_length)) +
+labs(title = "lizard", x = "total_length" , y = "weight" )
+```
+geom_point() menambahkan titik-titik ke plot, menghasilkan scatter plot.
+shape = 6 mengatur bentuk titik menjadi segitiga terbalik.
+aes(colour = common_name, size = total_length) menambahkan pemetaan estetika untuk:
+colour = common_name: Mengubah warna titik berdasarkan common_name (nama umum). Setiap nama umum akan memiliki warna yang berbeda.
+size = total_length: Mengubah ukuran titik berdasarkan total_length (panjang tubuh). Titik yang mewakili nilai panjang tubuh yang lebih besar akan memiliki ukuran yang lebih besar.
+
+
+```{r}
+data=gapminder
+data
+```
+Kode ini mengassign (menyimpan) dataset gapminder ke dalam variabel baru yang bernama data.
+Dataset gapminder adalah sebuah dataset yang berisi informasi tentang GDP per kapita, harapan hidup, dan populasi dari berbagai negara di dunia selama beberapa dekade (tahun 1952, 1957, 1962, dst.).
+
+```{r}
+library(ggplot2)
+library(gganimate)
+library(gifski)
+library(gapminder)
+library(readr)
+```
+
+
+```{r}
+gapminder_plot <- ggplot(data, aes(x = gdpPercap, y = lifeExp, colour = continent, linewidth = pop)) +
+  geom_point(shape = 6) +
+  scale_x_log10() +
+  scale_color_viridis_d(option = "cividis") +
+  labs(title = "Gapminder", x = "GDP", y = "Life Expectancy") +
+  theme(
+    panel.background = element_rect(fill = "black"),
+    plot.background = element_rect(fill = "black"),
+    plot.title = element_text(color = "white"),
+    axis.title.x = element_text(color = "red"),
+    axis.title.y = element_text(color = "green"),
+    axis.text = element_text(color = "red"))
+
+# Create the animation
+animated_gapminder <- gapminder_plot + 
+  transition_time(year) + 
+  labs(title = "Gapminder: Year {frame_time}")
+
+# Render and save the animation
+animate(animated_gapminder, nframes = 65, renderer = gifski_renderer("animated_gapminder.gif"))
+```
