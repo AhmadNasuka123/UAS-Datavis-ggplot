@@ -12,6 +12,7 @@ output:
       collapsed: true
     df_print: paged
 ---
+<<<<<<< HEAD
 ## Pengertian ggplot2
 
   ggplot2 adalah paket visualisasi data yang sangat populer di R, dikembangkan oleh Hadley Wickham. Paket ini didasarkan pada konsep *"Grammar of Graphics"*, yang memberikan kerangka kerja sistematis untuk membuat grafik. Dengan pendekatan ini, pengguna dapat membangun visualisasi data secara bertahap, dimulai dari pemetaan data hingga pengaturan estetika dan elemen tambahan. Fitur ini membuat ggplot2 sangat intuitif dan powerful untuk berbagai kebutuhan analisis data.
@@ -36,6 +37,10 @@ Selain itu, ggplot2 mendukung integrasi dengan paket lain untuk memperluas fungs
 
    Secara keseluruhan, ggplot2 adalah alat visualisasi yang sangat bermanfaat bagi siapa saja yang bekerja dengan data di R, memberikan cara yang intuitif dan efisien untuk mengungkap pola dan hubungan dalam data.
 
+=======
+#Pengertian ggplot2
+
+>>>>>>> a120de2e0df85cd7a4053e29169d4bbafd8d9954
 ```{r}
 suppressPackageStartupMessages({
   library(ggplot2)
@@ -49,11 +54,34 @@ suppressPackageStartupMessages({
   
   Datavis <- read_excel("Datavis.xlsx")
 })
+<<<<<<< HEAD
+=======
+```
+## Grafik Univariat
+
+```{r Grafik_Univariat}
+# membuat Plot sederhana dan mengubah backgroundnya dengan plot.background dan panel.background
+ggplot(Datavis,aes(x=Angka_Harapan_Hidup))+geom_histogram(binwidth=3,fill="purple",color="green",alpha=0.8)+labs(title="Sebaran Angka Harapan Hidup",x="Angka Harapan Hidup",y="Angka")+theme(
+  plot.background = element_rect(fill="green"),
+  panel.background = element_rect(fill="black")
+)
+```
+
+## Grafik Bivariat (Scatter Plot)
+
+```{r grafik_bivariat}
+# Membuat plot dengan variable x dan y
+ggplot(Datavis,aes(x=Angka_Harapan_Hidup,y=Pendapatan_per_kapita))+geom_point(aes(color=Benua),size=1.5,alpha=0.7)+labs(title="Pendapatan Per Kapita & Angka Harapan Hidup",x="Angka Harapan Hidup",y="Pendapatan Per Kapita")+theme(
+  plot.background = element_rect(fill="green"),
+  panel.background = element_rect(fill="black")
+)
+>>>>>>> a120de2e0df85cd7a4053e29169d4bbafd8d9954
 ```
 library(ggplot2):untuk membuat visualisasi data, seperti grafik dan plot.
 
 library(gganimate):untuk membuat animasi dari visualisasi ggplot2.
 
+<<<<<<< HEAD
 library(htmltools):untuk membuat dan memanipulasi konten HTML, biasanya untuk visualisasi interaktif.
 
 library(htmlwidgets):untuk membuat visualisasi interaktif berbasis JavaScript dalam R.
@@ -75,9 +103,43 @@ ggplot(data, aes(x = x, y = y, color = grup)) +
   facet_wrap(~ grup) +
   scale_color_manual(values = c("A" = "blue", "B" = "red", "C" = "yellow", "D" = "yellow")) +
   theme_minimal()
+=======
+## Grafik Multivariat
+
+- Scatter Plot : Warna & Ukuran
+```{r grafik_multivariat:color&size}
+# Membuat plot dan menambahkan warna dan ukuran yang berbeda setiap kategori dengan parameter color & size
+ggplot(Datavis,aes(x=Pendapatan_per_kapita,y=Angka_Harapan_Hidup))+geom_point(aes(color=Benua,size=Populasi))+labs(title="Pendapatan Per Kapita & Angka Harapan Hidup",x="Pendapatan Per Kapita",y="Angka Harapan Hidup",color="Benua",size="Populasi")+theme(
+  plot.background = element_rect(fill="green"),
+  panel.background = element_rect(fill="#222831")
+)
+```
+- Scatter Plot : Faceted
+```{r grafik_multivariat:faceted}
+# Membuat Plot dan memisahkan Benua menggunakan facet_wrap()
+ggplot(Datavis,aes(x=Pendapatan_per_kapita,y=Angka_Harapan_Hidup))+geom_point(aes(color=Benua,size=Jumlah_anak-1),alpha=0.7)+facet_wrap(~Benua)+labs(title="Pendapatan Per Kapita & Angka Harapan Hidup",x="Pendapatan Per Kapita",y="Angka Harapan Hidup",color="Warna",size="Populasi")+theme(
+  plot.background = element_rect(fill="green"),
+  panel.background = element_rect(fill="#222831")
+)
+```
+- Scatter Plot : Faceted (Animated)
+```{r grafik_multivariat:faceted_(animated)}
+# Membuat Plot
+plot <- ggplot(Datavis,aes(x=Pendapatan_per_kapita,y=Angka_Harapan_Hidup))+geom_point(aes(color=Benua,size=Jumlah_anak-1),alpha=0.7)+facet_wrap(~Benua)+labs(title="Pendapatan Per Kapita & Angka Harapan Hidup",x="Pendapatan Per Kapita",y="Angka Harapan Hidup",color="Warna",size="Populasi")+theme(
+  plot.background = element_rect(fill="green"),
+  panel.background = element_rect(fill="#222831")
+)
+
+# Menambahkan parameter tranisition kedalam plot
+animated_plot <- plot+transition_time(Tahun)+ease_aes("linear")+labs(subtitle = paste("Tahun : {scales::label_number()(frame_time)}"))
+
+# Merender dan menyimpan plot animasi ke dalam format .gif dengan gifski
+animate(animated_plot,nframes=15,renderer=gifski_renderer("animated_scatter_plot_faceted.gif"))
+>>>>>>> a120de2e0df85cd7a4053e29169d4bbafd8d9954
 ```
   Kode ini menghasilkan visualisasi data dalam bentuk scatter plot (grafik titik) menggunakan paket ggplot2 di R. Data yang digunakan berupa dua variabel acak yang terdistribusi normal (x dan y) dan satu variabel kategori (grup) yang terdiri dari 4 kategori ("A", "B", "C", "D"). Berikut adalah beberapa elemen penting dari visualisasi yang dihasilkan:
 
+<<<<<<< HEAD
 1. Titik (Scatter Plot): Masing-masing titik mewakili pasangan nilai x dan y dari data acak, yang    dipetakan di sumbu X dan Y.
 
 2. Pembagian Berdasarkan Kategori: Grafik dibagi menjadi empat sub-grafik menggunakan facet_wrap,    berdasarkan variabel grup, sehingga setiap grup memiliki tampilan grafisnya sendiri-sendiri.
@@ -207,3 +269,25 @@ htmlwidgets::saveWidget(as_widget(plot), "3d_scatter_plot.html")
 3. Penyimpanan sebagai HTML: Plot disimpan dalam format HTML, yang memungkinkan untuk diakses dan    dijelajahi secara interaktif di browser kapan saja.
 
   Secara keseluruhan, kode ini mempermudah visualisasi dan eksplorasi data dalam format 3D yang dinamis, memberikan pemahaman yang lebih baik tentang hubungan antar variabel dan memudahkan presentasi data yang lebih menarik dan informatif.
+=======
+## Grafik Interaktif
+
+- Bubble Plot : Interaktif (Plotly)
+```{r}
+
+# Membuat Plot
+plot <- plot_ly(Datavis, x = ~Pendapatan_per_kapita, y = ~Angka_Harapan_Hidup, z = ~Populasi, type = "scatter3d", mode = "markers", size = 1,color=~Benua) %>%
+  layout(title = "3D Scatter Plot",
+         scene = list(xaxis = list(title = "Pendapatan per Kapita"),
+                      yaxis = list(title = "Angka Harapan Hidup"),
+                      zaxis = list(title = "Populasi")))
+
+# Menampilkan plot
+print(plot)
+plot_browsable <- browsable(plot)
+plot_browsable
+
+# Menggunakan widget html
+htmlwidgets::saveWidget(as_widget(plot), "3d_scatter_plot.html")
+```
+>>>>>>> a120de2e0df85cd7a4053e29169d4bbafd8d9954
